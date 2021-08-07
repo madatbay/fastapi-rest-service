@@ -1,16 +1,21 @@
-from typing import Optional
+from typing import List, Optional
 from fastapi import FastAPI
 from fastapi.params import Body
 from pydantic import BaseModel
 from pydantic.fields import Field
+from pydantic.networks import HttpUrl
 
 
+class Image(BaseModel):
+    url: HttpUrl
+    name: str
 class Item(BaseModel):
     name: str
     describtion: Optional[str] = Field(None, max_length=300)
     price: float = Field(..., gt=0)
     tax: Optional[float] = None
-
+    tags: List[str] = []
+    image: Optional[Image] = None
 
 class User(BaseModel):
     username: str
